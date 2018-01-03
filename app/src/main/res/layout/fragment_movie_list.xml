@@ -12,7 +12,10 @@
         >
 
         <TextView
+<<<<<<< HEAD
             android:id="@+id/userId"
+=======
+>>>>>>> 3a1d5ab5327c4a36e3c31d9dbd838782da3eab32
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="user id"
@@ -25,7 +28,6 @@
             android:text="평론가님                   작성 평론 수: "
             android:gravity="center_vertical"
             />
-
         <TextView
             android:id="@+id/commentNum"
             android:layout_width="match_parent"
