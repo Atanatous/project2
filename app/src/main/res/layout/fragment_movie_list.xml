@@ -12,10 +12,7 @@
         >
 
         <TextView
-<<<<<<< HEAD
             android:id="@+id/userId"
-=======
->>>>>>> 3a1d5ab5327c4a36e3c31d9dbd838782da3eab32
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="user id"
