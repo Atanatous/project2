@@ -33,7 +33,7 @@
             android:id="@+id/btn_something"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="뭐할까"
+            android:text="이웃집 평론가"
             style="?android:buttonBarButtonStyle"/>
     </LinearLayout>
 

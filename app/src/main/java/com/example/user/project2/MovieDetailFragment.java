@@ -83,7 +83,7 @@ import org.json.JSONObject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListFragment extends Fragment {
+public class MovieDetailFragment extends Fragment {
 
     private ListView mListView;
     private ArrayList<ListViewItem> mItemList = new ArrayList<>();
@@ -94,45 +94,15 @@ public class MovieListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_movie_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "범죄도시", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "다크 나이트", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "좋은놈 나쁜놈 이상한놈", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "타이타닉", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "더 울프 오브 월스트리트", 0.0));
+        mItemList.add(new ListViewItem(4.8, "재밌어요!"));
+        mItemList.add(new ListViewItem(2.2, "별로에요"));
+        mItemList.add(new ListViewItem(3.7, "볼만해요~"));
 
         mAdapter = new ListViewAdapter();
-        mListView = (ListView) v.findViewById(R.id.listview_movies);
+        mListView = (ListView) v.findViewById(R.id.detail_user_comments);
         mListView.setAdapter(mAdapter);
-
-        /*
-
-        //Set ShortClick Listener
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Pass data 'adapter' and 'clicked item' to Detail_Fragment
-                // To pass, use bundle packing.
-                ListViewContacts item = (ListViewContacts) parent.getItemAtPosition(position);
-                ArrayList<ListViewContacts> itemList = new ArrayList<>();
-                ArrayList<ListViewAdapter> adapterList = new ArrayList<>();
-                itemList.add(item);
-                adapterList.add(mAdapter);
-
-                /*ContactDetail_Fragment detail_fragment = new ContactDetail_Fragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("itemList", itemList);
-                bundle.putSerializable("adapterList", adapterList);
-                detail_fragment.setArguments(bundle);
-
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack("List");
-                transaction.replace(R.id.fragment_container, detail_fragment);
-                transaction.commit();
-            }
-        });
-        */
 
         return v;
     }
@@ -179,13 +149,11 @@ public class MovieListFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.listview_movies, parent, false);
             }
 
-            ImageView iconImageView = (ImageView) convertView.findViewById(R.id.list_movie_photo);
-            TextView titleTextView = (TextView) convertView.findViewById(R.id.list_movie_name);
-            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.list_movie_score);
+            TextView titleTextView = (TextView) convertView.findViewById(R.id.user_score);
+            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.user_comment);
 
-            iconImageView.setImageDrawable(mItemList.get(pos).getIcon());
-            titleTextView.setText(mItemList.get(pos).getName());
-            titleTextView2.setText(mItemList.get(pos).getScore().toString());
+            titleTextView.setText(mItemList.get(pos).getScore().toString());
+            titleTextView2.setText(mItemList.get(pos).getName());
 
             return convertView;
         }
@@ -193,30 +161,12 @@ public class MovieListFragment extends Fragment {
 
     class ListViewItem implements Serializable{
         private static final long serialVersionUID = 1L;
-        private Drawable mIcon;
-        private String mName;
         private Double mScore;
+        private String mName;
 
-        public ListViewItem(Drawable icon, String name, Double number)
+        public ListViewItem(Double number, String name)
         {
-            mIcon = icon;
-            mName = name;
             mScore = number;
-        }
-
-        public Drawable getIcon() {
-            return mIcon;
-        }
-
-        public void setIcon(Drawable icon) {
-            mIcon = icon;
-        }
-
-        public String getName() {
-            return mName;
-        }
-
-        public void setName(String name) {
             mName = name;
         }
 
@@ -227,7 +177,14 @@ public class MovieListFragment extends Fragment {
         public void setScore(Double score) {
             mScore = score;
         }
-    }
 
+        public String getName() {
+            return mName;
+        }
+
+        public void setName(String name) {
+            mName = name;
+        }
+    }
 }
 

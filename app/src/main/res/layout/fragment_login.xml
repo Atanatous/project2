@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:text="Welcome Challenger!"
+        android:text="어서오세요 평론가님!"
         />
     <EditText
         android:id="@+id/loginId"
