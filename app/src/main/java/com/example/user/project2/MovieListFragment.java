@@ -79,6 +79,7 @@ import static android.app.Activity.RESULT_OK;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,17 +97,15 @@ public class MovieListFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "범죄도시", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "다크 나이트", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "좋은놈 나쁜놈 이상한놈", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "타이타닉", 0.0));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "더 울프 오브 월스트리트", 0.0));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "범죄도시", 3.5, "범죄들의 천국"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "다크 나이트", 4.2, "어두운 밤"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "좋은놈 나쁜놈 이상한놈", 3.8, "모든 놈들은 항상 이상했다."));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "타이타닉", 4.4, "백허그밖에 기억나지 않아요"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "더 울프 오브 월스트리트", 3.7, "더 늑대 구슬 벽 거리 거닐다."));
 
         mAdapter = new ListViewAdapter();
         mListView = (ListView) v.findViewById(R.id.listview_movies);
         mListView.setAdapter(mAdapter);
-
-        /*
 
         //Set ShortClick Listener
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,30 +113,31 @@ public class MovieListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Pass data 'adapter' and 'clicked item' to Detail_Fragment
                 // To pass, use bundle packing.
-                ListViewContacts item = (ListViewContacts) parent.getItemAtPosition(position);
-                ArrayList<ListViewContacts> itemList = new ArrayList<>();
-                ArrayList<ListViewAdapter> adapterList = new ArrayList<>();
-                itemList.add(item);
-                adapterList.add(mAdapter);
+               ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+//                ArrayList<ListViewItem> itemList = new ArrayList<>();
+//                ArrayList<ListViewAdapter> adapterList = new ArrayList<>();
+//                itemList.add(item);
+//                adapterList.add(mAdapter);
 
-                /*ContactDetail_Fragment detail_fragment = new ContactDetail_Fragment();
+                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("itemList", itemList);
-                bundle.putSerializable("adapterList", adapterList);
-                detail_fragment.setArguments(bundle);
+//                bundle.putSerializable("itemList", itemList);
+//                bundle.putSerializable("adapterList", adapterList);
+                bundle.putString("title", item.getName());
+                movieDetailFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.addToBackStack("List");
-                transaction.replace(R.id.fragment_container, detail_fragment);
+                transaction.replace(R.id.fragment_container, movieDetailFragment);
                 transaction.commit();
             }
         });
-        */
+
 
         return v;
     }
 
-    class ListViewAdapter extends BaseAdapter implements Serializable{
+    class ListViewAdapter extends BaseAdapter implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
@@ -180,12 +180,14 @@ public class MovieListFragment extends Fragment {
             }
 
             ImageView iconImageView = (ImageView) convertView.findViewById(R.id.list_movie_photo);
-            TextView titleTextView = (TextView) convertView.findViewById(R.id.list_movie_name);
-            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.list_movie_score);
+            TextView title = (TextView) convertView.findViewById(R.id.list_movie_name);
+            TextView description = (TextView) convertView.findViewById(R.id.list_movie_description);
+            TextView score = (TextView) convertView.findViewById(R.id.list_movie_score);
 
             iconImageView.setImageDrawable(mItemList.get(pos).getIcon());
-            titleTextView.setText(mItemList.get(pos).getName());
-            titleTextView2.setText(mItemList.get(pos).getScore().toString());
+            title.setText(mItemList.get(pos).getName());
+            description.setText(mItemList.get(pos).getDescription());
+            score.setText(mItemList.get(pos).getScore().toString());
 
             return convertView;
         }
@@ -196,12 +198,14 @@ public class MovieListFragment extends Fragment {
         private Drawable mIcon;
         private String mName;
         private Double mScore;
+        private String mDescription;
 
-        public ListViewItem(Drawable icon, String name, Double number)
+        public ListViewItem(Drawable icon, String name, Double number, String description)
         {
             mIcon = icon;
             mName = name;
             mScore = number;
+            mDescription = description;
         }
 
         public Drawable getIcon() {
@@ -227,6 +231,10 @@ public class MovieListFragment extends Fragment {
         public void setScore(Double score) {
             mScore = score;
         }
+
+        public String getDescription() { return mDescription; }
+
+        public void setDescription(String description) { mDescription = description; }
     }
 
 }
