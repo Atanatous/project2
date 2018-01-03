@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <Button
+        android:id="@+id/btn_putPhoneContacts"
+        android:text="핸드폰 연락처 업로드"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:background="#4267B2"
+        android:textColor="#FFFFFF"
+        android:layout_height="25dp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_putFacebookContacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_getServerContacts"
+            android:text="통합 연락처 다운로드"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#4267B2"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+
+        <Button
+            android:id="@+id/btn_deleteServerContacts"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#4267B2"
+            android:textColor="#FFFFFF"
+            android:text="서버 연락처 전체 삭제"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="연락처 검색"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/editTextFilter"
+            android:hint="검색할 이름 입력"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

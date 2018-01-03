@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/wolf"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:textColor="#000000"
+                android:text="영화 제목"
+                android:gravity="center_vertical"
+                android:id="@+id/detail_movie_name"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:textColor="#000000"
+                android:text="평균 평점"
+                android:gravity="center_vertical"
+                android:id="@+id/detail_movie_score"
+            />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        >
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/detail_my_score"
+            />
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:text="/ 5.0 한줄평: "
+            android:gravity="center_vertical"
+            />
+
+        <EditText
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:id="@+id/detail_my_comment"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="등록"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/detail_user_comments"
+        >
+    </ListView>
+
+
+
+</LinearLayout>
