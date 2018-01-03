@@ -195,19 +195,19 @@ public class ContactsFragment extends Fragment {
 
         EditText editTextFilter = (EditText)v.findViewById(R.id.editTextFilter) ;
         editTextFilter.addTextChangedListener(new TextWatcher() {
-                                                  @Override public void afterTextChanged(Editable edit) {
-                                                      String filterText = edit.toString() ;
-                                                      ((ListViewAdapter)mListView.getAdapter()).getFilter().filter(filterText) ;
-                                                  }
+            @Override public void afterTextChanged(Editable edit) {
+              String filterText = edit.toString() ;
+              ((ListViewAdapter)mListView.getAdapter()).getFilter().filter(filterText) ;
+            }
 
-                                                  @Override public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                                                  {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
-                                                  }
-                                                  @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                                                  }
-                                              }
+            }
+            }
         ) ;
 
 
