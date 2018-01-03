@@ -120,7 +120,7 @@ public class MovieListFragment extends Fragment {
                 itemList.add(item);
                 adapterList.add(mAdapter);
 
-                /*ContactDetail_Fragment detail_fragment = new ContactDetail_Fragment();
+                ContactDetail_Fragment detail_fragment = new ContactDetail_Fragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("itemList", itemList);
                 bundle.putSerializable("adapterList", adapterList);
