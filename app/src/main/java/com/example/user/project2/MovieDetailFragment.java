@@ -96,6 +96,9 @@ public class MovieDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
+        Bundle args = getArguments();
+        String title = args.getString("title");
+
         mItemList.add(new ListViewItem(4.8, "재밌어요!"));
         mItemList.add(new ListViewItem(2.2, "별로에요"));
         mItemList.add(new ListViewItem(3.7, "볼만해요~"));
@@ -146,11 +149,11 @@ public class MovieDetailFragment extends Fragment {
 
             if (convertView == null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.listview_movies, parent, false);
+                convertView = inflater.inflate(R.layout.fragment_movie_detail, parent, false);
             }
 
-            TextView titleTextView = (TextView) convertView.findViewById(R.id.user_score);
-            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.user_comment);
+            TextView titleTextView = (TextView) convertView.findViewById(R.id.detail_my_score);
+            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.detail_my_comment);
 
             titleTextView.setText(mItemList.get(pos).getScore().toString());
             titleTextView2.setText(mItemList.get(pos).getName());
