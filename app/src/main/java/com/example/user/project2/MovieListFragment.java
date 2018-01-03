@@ -111,11 +111,6 @@ public class MovieListFragment extends Fragment {
 
         new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/");
 
-//        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "The City of Crime", 3.5, "범죄들의 천국"));
-//        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "Dark Knight", 4.2, "어두운 밤"));
-//        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "Good, Bad, Strange", 3.8, "모든 놈들은 항상 이상했다."));
-//        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "Titanic", 4.4, "백허그밖에 기억나지 않아요"));
-//        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "The Wolf of Wallstreet", 3.7, "더 늑대 구슬 벽 거리 거닐다."));
 
         mAdapter = new ListViewAdapter();
         mListView = (ListView) v.findViewById(R.id.listview_movies);
@@ -127,16 +122,10 @@ public class MovieListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Pass data 'adapter' and 'clicked item' to Detail_Fragment
                 // To pass, use bundle packing.
-               ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-//                ArrayList<ListViewItem> itemList = new ArrayList<>();
-//                ArrayList<ListViewAdapter> adapterList = new ArrayList<>();
-//                itemList.add(item);
-//                adapterList.add(mAdapter);
+                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
 
                 MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable("itemList", itemList);
-//                bundle.putSerializable("adapterList", adapterList);
+                Bundle bundle = new Bundle();;
                 bundle.putString("title", item.getName());
                 bundle.putString("id", userId);
                 movieDetailFragment.setArguments(bundle);
@@ -231,6 +220,7 @@ public class MovieListFragment extends Fragment {
                     JSONObject jsonObject = jsonArray.getJSONObject(i); //i번째 Json데이터를 가져옴
                     String title = jsonObject.getString("title");
                     Double score = jsonObject.getDouble("score");
+                    score = Double.parseDouble(String.format("%.1f",score));
                     String description = jsonObject.getString("description");
                     ListViewItem listViewItem;
                     title = title.replace("_", " ");

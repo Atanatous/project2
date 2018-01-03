@@ -60,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:id="@+id/detail_my_score"
-            android:inputType = "number"
+            android:inputType="number"/>
             />
 
         <TextView
