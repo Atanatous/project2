@@ -87,7 +87,7 @@ public class MovieListFragment extends Fragment {
 
     private ListView mListView;
     private ArrayList<ListViewItem> mItemList = new ArrayList<>();
-    private ListViewAdapter mAdapter = new ListViewAdapter();
+    private ListViewAdapter mAdapter;
 
     // Main function.
     // Make ListView and set listeners on it.
@@ -102,6 +102,7 @@ public class MovieListFragment extends Fragment {
         mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "타이타닉", 0.0));
         mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "더 울프 오브 월스트리트", 0.0));
 
+        mAdapter = new ListViewAdapter();
         mListView = (ListView) v.findViewById(R.id.listview_movies);
         mListView.setAdapter(mAdapter);
 
@@ -175,12 +176,12 @@ public class MovieListFragment extends Fragment {
 
             if (convertView == null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.listview_contacts, parent, false);
+                convertView = inflater.inflate(R.layout.listview_movies, parent, false);
             }
 
-            ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1);
-            TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1);
-            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.textView2);
+            ImageView iconImageView = (ImageView) convertView.findViewById(R.id.list_movie_photo);
+            TextView titleTextView = (TextView) convertView.findViewById(R.id.list_movie_name);
+            TextView titleTextView2 = (TextView) convertView.findViewById(R.id.list_movie_score);
 
             iconImageView.setImageDrawable(mItemList.get(pos).getIcon());
             titleTextView.setText(mItemList.get(pos).getName());
@@ -195,7 +196,6 @@ public class MovieListFragment extends Fragment {
         private Drawable mIcon;
         private String mName;
         private Double mScore;
-        /*private String mMail;*/
 
         public ListViewItem(Drawable icon, String name, Double number)
         {
