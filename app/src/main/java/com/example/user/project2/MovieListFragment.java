@@ -214,6 +214,7 @@ public class MovieListFragment extends Fragment {
                 Drawable titanic = ContextCompat.getDrawable(getActivity(), R.drawable.titanic);
                 Drawable nom3 = ContextCompat.getDrawable(getActivity(), R.drawable.nom3);
                 Drawable darknight = ContextCompat.getDrawable(getActivity(), R.drawable.darkknight);
+                mItemList.clear();
 
                 for (int i=0; i<jsonArray.length(); i++)
                 {
@@ -300,13 +301,22 @@ public class MovieListFragment extends Fragment {
 
             ImageView iconImageView = (ImageView) convertView.findViewById(R.id.list_movie_photo);
             TextView title = (TextView) convertView.findViewById(R.id.list_movie_name);
-            TextView description = (TextView) convertView.findViewById(R.id.list_movie_description);
-            TextView score = (TextView) convertView.findViewById(R.id.list_movie_score);
+            TextView descriptionView = (TextView) convertView.findViewById(R.id.list_movie_description);
+            TextView scoreView = (TextView) convertView.findViewById(R.id.list_movie_score);
 
             iconImageView.setImageDrawable(mItemList.get(pos).getIcon());
             title.setText(mItemList.get(pos).getName());
-            description.setText(mItemList.get(pos).getDescription());
-            score.setText(mItemList.get(pos).getScore().toString());
+            descriptionView.setText(mItemList.get(pos).getDescription());
+            Double score = mItemList.get(pos).getScore();
+            scoreView.setText(score.toString());
+
+            if (score > 4.0) {
+                scoreView.setTextColor(getResources().getColor(R.color.Excellent));
+            } else if (score > 3.5) {
+                scoreView.setTextColor(getResources().getColor(R.color.Good));
+            } else {
+                scoreView.setTextColor(getResources().getColor(R.color.Bad));
+            }
 
             return convertView;
         }

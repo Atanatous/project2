@@ -1,64 +1,23 @@
 package com.example.user.project2;
 
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -68,17 +27,12 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import static android.app.Activity.RESULT_OK;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,6 +46,10 @@ public class MovieDetailFragment extends Fragment {
     private String myName;
     private Double myScore;
     private String myComment;
+    private String movieDescription;
+    private Double movieScore;
+    private TextView descriptionView;
+    private TextView scoreView;
 
     // Main function.
     // Make ListView and set listeners on it.
@@ -109,7 +67,10 @@ public class MovieDetailFragment extends Fragment {
         myName = userId;
 
         TextView detail_movie_name = (TextView) v.findViewById(R.id.detail_movie_name);
+        scoreView = (TextView) v.findViewById(R.id.detail_movie_score);
+        descriptionView = (TextView) v.findViewById(R.id.detail_movie_description);
         detail_movie_name.setText(title);
+
         mListView = v.findViewById(R.id.detail_user_comments);
         mAdapter = new ListViewAdapter();
 
@@ -125,7 +86,7 @@ public class MovieDetailFragment extends Fragment {
         else if(title.equals("The Wolf of Wallstreet"))
             detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.wolf));
 
-        new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/"+movieTitle);//AsyncTask 시작시킴
+        new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/" + movieTitle);//AsyncTask 시작시킴
 
         final EditText score = (EditText) v.findViewById(R.id.detail_my_score);
         final EditText comment = (EditText) v.findViewById(R.id.detail_my_comment);
@@ -228,7 +189,8 @@ public class MovieDetailFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show(); //서버로 부터 받은 메시지를 출력해주는 부분
+            mItemList.add(new ListViewItem(myName, myScore, myComment));
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -299,15 +261,29 @@ public class MovieDetailFragment extends Fragment {
 
             try {
                 JSONObject mJSONobject = new JSONObject(result);
-                JSONArray jsonArray = new JSONArray(mJSONobject.getString("comments"));
+                movieDescription = mJSONobject.getString("description");
+                movieScore = mJSONobject.getDouble("score");
+                movieScore = Double.parseDouble(String.format("%.1f",movieScore));
+                descriptionView.setText(movieDescription);
+                scoreView.setText(movieScore.toString());
+                if (movieScore > 4.0) {
+                    scoreView.setTextColor(getResources().getColor(R.color.Excellent));
+                } else if (movieScore > 3.5) {
+                    scoreView.setTextColor(getResources().getColor(R.color.Good));
+                } else {
+                    scoreView.setTextColor(getResources().getColor(R.color.Bad));
+                }
+
+                JSONArray commentArray = new JSONArray(mJSONobject.getString("comments"));
 
                 mItemList.clear();
-                Log.d(null, "onPostExecute: " + jsonArray);
-                for (int i=0; i<jsonArray.length(); i++)
+
+                for (int i=0; i<commentArray.length(); i++)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i); //i번째 Json데이터를 가져옴
+                    JSONObject jsonObject = commentArray.getJSONObject(i); // i번째 Json데이터를 가져옴
                     String username = jsonObject.getString("username");
                     Double score = jsonObject.getDouble("score");
+
                     String message = jsonObject.getString("message");
 
                     mItemList.add(new ListViewItem(username, score, message));
