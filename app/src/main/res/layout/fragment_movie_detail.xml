@@ -12,6 +12,7 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:src="@drawable/wolf"
+            android:id="@+id/detail_movie_photo"
             />
 
         <LinearLayout
@@ -24,6 +25,8 @@
                 android:layout_height="130dp"
                 android:textColor="#000000"
                 android:text="영화 제목"
+                android:textSize="25dp"
+                android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:id="@+id/detail_movie_name"
                 />
@@ -70,7 +73,7 @@
             />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:id="@+id/detail_my_comment"
             />

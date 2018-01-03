@@ -103,13 +103,29 @@ public class MovieDetailFragment extends Fragment {
         Bundle args = getArguments();
 
         String title = args.getString("title");
+        movieTitle = title.replace(" ", "_");
+
         String userId = args.getString("id");
+        myName = userId;
 
-        movieTitle = args.getString("title");
-
+        TextView detail_movie_name = (TextView) v.findViewById(R.id.detail_movie_name);
+        detail_movie_name.setText(title);
+        mListView = v.findViewById(R.id.detail_user_comments);
         mAdapter = new ListViewAdapter();
-        mListView = (ListView) v.findViewById(R.id.detail_user_comments);
-        mListView.setAdapter(mAdapter);
+
+        ImageView detail_movie_photo = (ImageView) v.findViewById(R.id.detail_movie_photo);
+        if (title.equals("The City Of Crime"))
+            detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity));
+        else if(title.equals("Dark Knight"))
+            detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight));
+        else if(title.equals("Good, Bad, Strange"))
+            detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.nom3));
+        else if(title.equals("Titanic"))
+            detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.titanic));
+        else if(title.equals("The Wolf of Wallstreet"))
+            detail_movie_photo.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.wolf));
+
+        new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/"+movieTitle);//AsyncTask 시작시킴
 
         final EditText score = (EditText) v.findViewById(R.id.detail_my_score);
         final EditText comment = (EditText) v.findViewById(R.id.detail_my_comment);
@@ -128,7 +144,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
-        new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/"+movieTitle);//AsyncTask 시작시킴
+
 
         return v;
     }
@@ -283,26 +299,24 @@ public class MovieDetailFragment extends Fragment {
 
             try {
                 JSONObject mJSONobject = new JSONObject(result);
-                JSONArray jsonArray = new JSONArray(mJSONobject.getString("comment"));
+                JSONArray jsonArray = new JSONArray(mJSONobject.getString("comments"));
 
                 mItemList.clear();
-
+                Log.d(null, "onPostExecute: " + jsonArray);
                 for (int i=0; i<jsonArray.length(); i++)
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i); //i번째 Json데이터를 가져옴
                     String username = jsonObject.getString("username");
-                    String score = jsonObject.getString("score");
+                    Double score = jsonObject.getDouble("score");
                     String message = jsonObject.getString("message");
 
-                    mItemList.add(new ListViewItem(username, Double.parseDouble(score), message));
+                    mItemList.add(new ListViewItem(username, score, message));
 
                 }
 
-                mListView.invalidateViews();
-                mListView.refreshDrawableState();
+                mListView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
 
-                Toast.makeText(getActivity(), "Download completed", Toast.LENGTH_LONG).show(); //서버로 부터 받은 값을 출력해주는 부분
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -350,7 +364,7 @@ public class MovieDetailFragment extends Fragment {
 
             if (convertView == null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.fragment_movie_detail, parent, false);
+                convertView = inflater.inflate(R.layout.listview_comments, parent, false);
             }
 
             TextView id = (TextView) convertView.findViewById(R.id.comment_id);
