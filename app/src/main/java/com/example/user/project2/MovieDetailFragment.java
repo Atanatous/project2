@@ -98,6 +98,7 @@ public class MovieDetailFragment extends Fragment {
 
         Bundle args = getArguments();
         String title = args.getString("title");
+        String userId = args.getString("id");
 
         mItemList.add(new ListViewItem(4.8, "재밌어요!"));
         mItemList.add(new ListViewItem(2.2, "별로에요"));

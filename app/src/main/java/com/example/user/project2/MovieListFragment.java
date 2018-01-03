@@ -89,6 +89,7 @@ public class MovieListFragment extends Fragment {
     private ListView mListView;
     private ArrayList<ListViewItem> mItemList = new ArrayList<>();
     private ListViewAdapter mAdapter;
+    private String userId;
 
     // Main function.
     // Make ListView and set listeners on it.
@@ -96,12 +97,20 @@ public class MovieListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie_list, container, false);
+        Bundle bundle = getArguments();
+        userId = bundle.getString("id");
 
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "범죄도시", 3.5, "범죄들의 천국"));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "다크 나이트", 4.2, "어두운 밤"));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "좋은놈 나쁜놈 이상한놈", 3.8, "모든 놈들은 항상 이상했다."));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "타이타닉", 4.4, "백허그밖에 기억나지 않아요"));
-        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "더 울프 오브 월스트리트", 3.7, "더 늑대 구슬 벽 거리 거닐다."));
+        TextView username = (TextView) v.findViewById(R.id.userId);
+        TextView commentNum = (TextView) v.findViewById(R.id.commentNum);
+        username.setText(userId);
+        commentNum.setText("5");
+
+        mItemList.clear();
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.crimecity), "The City Of Crime", 3.5, "범죄들의 천국"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.darkknight), "Dark Knight", 4.2, "어두운 밤"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.nom3), "Good, Bad, Strange", 3.8, "모든 놈들은 항상 이상했다."));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.titanic), "Titanic", 4.4, "백허그밖에 기억나지 않아요"));
+        mItemList.add(new ListViewItem(ContextCompat.getDrawable(getActivity(), R.drawable.wolf), "The Wolf of Wallstreet", 3.7, "더 늑대 구슬 벽 거리 거닐다."));
 
         mAdapter = new ListViewAdapter();
         mListView = (ListView) v.findViewById(R.id.listview_movies);
@@ -124,6 +133,7 @@ public class MovieListFragment extends Fragment {
 //                bundle.putSerializable("itemList", itemList);
 //                bundle.putSerializable("adapterList", adapterList);
                 bundle.putString("title", item.getName());
+                bundle.putString("id", userId);
                 movieDetailFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

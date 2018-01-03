@@ -11,8 +11,28 @@
         android:orientation="horizontal"
         >
 
+        <TextView
+            android:id="@+id/userId"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="user id"
+            android:gravity="center"
+            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="평론가님                   작성 평론 수: "
+            android:gravity="center_vertical"
+            />
 
+        <TextView
+            android:id="@+id/commentNum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="num"
+            android:gravity="center"
+            />
 
     </LinearLayout>
 

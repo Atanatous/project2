@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,8 +45,7 @@ public class LoginFragment extends Fragment {
         loginPW = (EditText) v.findViewById(R.id.loginPW);
 
 
-
-        Button loginBtn = (Button) v.findViewById(R.id.loginBtn);
+        final Button loginBtn = (Button) v.findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +62,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SignFragment signFragment = new SignFragment();
-
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.addToBackStack("Login");
                 transaction.replace(R.id.fragment_container, signFragment);
@@ -165,9 +164,16 @@ public class LoginFragment extends Fragment {
                 if (responseCode == 1) {
                     MovieListFragment movieListFragment = new MovieListFragment();
 
+                    String id = loginId.getText().toString();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", id);
+                    movieListFragment.setArguments(bundle);
+
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, movieListFragment);
                     transaction.commit();
+
+                    Toast.makeText(getActivity(), id + "님 환영합니다!", Toast.LENGTH_LONG).show();
 
                 } else {
                     loginPW.setText("");
