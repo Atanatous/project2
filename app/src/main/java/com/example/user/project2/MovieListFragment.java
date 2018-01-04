@@ -90,10 +90,7 @@ public class MovieListFragment extends Fragment {
     private ArrayList<ListViewItem> mItemList = new ArrayList<>();
     private ListViewAdapter mAdapter;
     private String userId;
-    private String[] movieTitle =
-            {"The_City_of_Crime", "Dark_Knight",
-            "Good,_Bad_,Strange", "Titanic",
-            "The_Wolf_of_Wallstreet"};
+    private TextView commentNum;
 
     // Main function.
     // Make ListView and set listeners on it.
@@ -110,7 +107,6 @@ public class MovieListFragment extends Fragment {
         commentNum.setText("5");
 
         new JSONTaskServer().execute("http://13.125.74.215:8080/api/articles/");
-
 
         mAdapter = new ListViewAdapter();
         mListView = (ListView) v.findViewById(R.id.listview_movies);
@@ -208,54 +204,54 @@ public class MovieListFragment extends Fragment {
             super.onPostExecute(result);
 
             try {
-                JSONArray jsonArray = new JSONArray(result);
-                Drawable wolf = ContextCompat.getDrawable(getActivity(), R.drawable.wolf);
-                Drawable crimecity = ContextCompat.getDrawable(getActivity(), R.drawable.crimecity);
-                Drawable titanic = ContextCompat.getDrawable(getActivity(), R.drawable.titanic);
-                Drawable nom3 = ContextCompat.getDrawable(getActivity(), R.drawable.nom3);
-                Drawable darknight = ContextCompat.getDrawable(getActivity(), R.drawable.darkknight);
-                mItemList.clear();
+                    JSONArray jsonArray = new JSONArray(result);
 
-                for (int i=0; i<jsonArray.length(); i++)
-                {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i); //i번째 Json데이터를 가져옴
-                    String title = jsonObject.getString("title");
-                    Double score = jsonObject.getDouble("score");
-                    score = Double.parseDouble(String.format("%.1f",score));
-                    String description = jsonObject.getString("description");
-                    ListViewItem listViewItem;
-                    title = title.replace("_", " ");
-                    switch (title) {
-                        case "The City of Crime":
-                            listViewItem = new ListViewItem(crimecity, title, score, description);
-                            mItemList.add(listViewItem);
-                            break;
-                        case "Dark Knight":
-                            listViewItem = new ListViewItem(darknight, title, score, description);
-                            mItemList.add(listViewItem);
-                            break;
-                        case "Good, Bad, Strange":
-                            listViewItem = new ListViewItem(nom3, title, score, description);
-                            mItemList.add(listViewItem);
-                            break;
-                        case "Titanic":
-                            listViewItem = new ListViewItem(titanic, title, score, description);
-                            mItemList.add(listViewItem);
-                            break;
-                        case "The Wolf of Wallstreet":
-                            listViewItem = new ListViewItem(wolf, title, score, description);
-                            mItemList.add(listViewItem);
-                            break;
+                    Drawable wolf = ContextCompat.getDrawable(getActivity(), R.drawable.wolf);
+                    Drawable crimecity = ContextCompat.getDrawable(getActivity(), R.drawable.crimecity);
+                    Drawable titanic = ContextCompat.getDrawable(getActivity(), R.drawable.titanic);
+                    Drawable nom3 = ContextCompat.getDrawable(getActivity(), R.drawable.nom3);
+                    Drawable darknight = ContextCompat.getDrawable(getActivity(), R.drawable.darkknight);
+                    mItemList.clear();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i); //i번째 Json데이터를 가져옴
+                        String title = jsonObject.getString("title");
+                        Double score = jsonObject.getDouble("score");
+                        score = Double.parseDouble(String.format("%.1f", score));
+                        String description = jsonObject.getString("description");
+                        ListViewItem listViewItem;
+                        title = title.replace("_", " ");
+                        switch (title) {
+                            case "The City of Crime":
+                                listViewItem = new ListViewItem(crimecity, title, score, description);
+                                mItemList.add(listViewItem);
+                                break;
+                            case "Dark Knight":
+                                listViewItem = new ListViewItem(darknight, title, score, description);
+                                mItemList.add(listViewItem);
+                                break;
+                            case "Good, Bad, Strange":
+                                listViewItem = new ListViewItem(nom3, title, score, description);
+                                mItemList.add(listViewItem);
+                                break;
+                            case "Titanic":
+                                listViewItem = new ListViewItem(titanic, title, score, description);
+                                mItemList.add(listViewItem);
+                                break;
+                            case "The Wolf of Wallstreet":
+                                listViewItem = new ListViewItem(wolf, title, score, description);
+                                mItemList.add(listViewItem);
+                                break;
+                        }
+                        mListView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mListView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
-    }
 
     class ListViewAdapter extends BaseAdapter implements Serializable {
 

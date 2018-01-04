@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:layout_width="80dp"
@@ -43,12 +44,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginRight="24dp">
+        android:layout_marginRight="12dp"
+        android:background="#444444">
 
         <TextView
             android:text="Score"
-            android:textSize="16dp"
-            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
@@ -58,6 +60,7 @@
             android:id="@+id/list_movie_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="24dp"
             android:gravity="center"

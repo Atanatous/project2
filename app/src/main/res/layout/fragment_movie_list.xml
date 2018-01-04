@@ -16,13 +16,13 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="user id"
-            android:gravity="center"
+            android:gravity="right |center_vertical"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="평론가님                   작성 평론 수: "
+            android:text="   평론가님                작성 평론 수 :  "
             android:gravity="center_vertical"
             />
         <TextView
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="num"
-            android:gravity="center"
+            android:gravity="left |center_vertical"
             />
 
     </LinearLayout>
